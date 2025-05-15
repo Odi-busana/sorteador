@@ -122,7 +122,12 @@
     ];
 
     function renderListas() {
+
       const disponiveis = document.getElementById("disponiveis");
+      const sorteadas = document.getElementById("sorteadas");
+      const tituloDisp = document.querySelector(".lista h2:nth-of-type(1)");
+      const tituloSort = document.querySelector(".lista + .botoes + .lista h2");
+
       disponiveis.innerHTML = "";
       palavras.slice().sort().forEach(p => {
         const div = document.createElement("div");
@@ -130,7 +135,20 @@
         div.textContent = p;
         disponiveis.appendChild(div);
       });
+
+      // Atualiza os títulos com a contagem
+      tituloDisp.textContent = `Palavras disponíveis (${disponiveis.childElementCount})`;
+      tituloSort.textContent = `Palavras sorteadas (${sorteadas.childElementCount})`;
+
     }
+
+    function atualizarContadores() {
+      const tituloDisp = document.querySelector(".lista h2:nth-of-type(1)");
+      const tituloSort = document.querySelector(".lista + .botoes + .lista h2");
+      tituloDisp.textContent = `Palavras disponíveis (${document.getElementById("disponiveis").childElementCount})`;
+      tituloSort.textContent = `Palavras sorteadas (${document.getElementById("sorteadas").childElementCount})`;
+    }
+
 
     function sortear() {
       const disponiveis = document.getElementById("disponiveis");
@@ -139,6 +157,7 @@
       if (palavrasEl.length === 0) return alert("Todas as palavras já foram sorteadas!");
       const idx = Math.floor(Math.random() * palavrasEl.length);
       sorteadas.appendChild(palavrasEl[idx]);
+      atualizarContadores();
     }
 
     function zerar() {
@@ -146,6 +165,7 @@
       const sorteadas = document.getElementById("sorteadas");
       const todas = sorteadas.querySelectorAll(".palavra");
       todas.forEach(p => disponiveis.appendChild(p));
+      atualizarContadores();
     }
 
     function toggleConfig() {
